@@ -1,0 +1,41 @@
+# Конфиг учебного репозитория для тестов mcp-context.
+version: 1
+
+exclude:
+  - "tmp/**"
+
+# Внешний пакет из node_modules admin (helpers.ts копирует его туда из test/fixtures/packages/fx-kit).
+packages:
+  - { name: "@fx/kit", from: "apps/admin" }
+
+extractors:
+  rules:
+    - match: { path: "packages/api-client/src/generated/**" }
+      use: code
+      options: { comments: false }
+    - match: { path: "**/*.json" }
+      use: skip
+
+documents:
+  types:
+    - { path: "docs/adr/**", type: adr }
+    - { path: "docs/guides/**", type: guide }
+    - { path: "**/CHANGELOG.md", type: changelog }
+  status:
+    - { path: "docs/adr/**", regex: "^\\|\\s*Статус\\s*\\|\\s*([A-Za-z]+)" }
+  hidden_statuses: [deprecated, superseded]
+  id_refs:
+    - { pattern: "ADR-(\\d{4})", path: "docs/adr/$1-*.md" }
+
+keys:
+  roles:
+    - { kind: channel, context: "(^|\\.)publish$", role: publish }
+    - { kind: channel, context: "(^|\\.)Subscribe$", role: subscribe }
+
+checks:
+  ignore:
+    - { kind: broken-endpoint, value: "^GET /livez$", reason: "health-проба вне контракта намеренно" }
+
+history:
+  max_commit_files: 10
+  min_cochange: 2

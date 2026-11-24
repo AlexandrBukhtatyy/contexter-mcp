@@ -1,0 +1,7 @@
+{
+  // Алиас admin, как в типичном монорепозитории: живёт в корневом tsconfig.
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": { "@/*": ["apps/admin/src/*"] }
+  }
+}

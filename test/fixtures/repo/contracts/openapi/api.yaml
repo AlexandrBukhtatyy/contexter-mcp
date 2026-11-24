@@ -1,0 +1,85 @@
+openapi: 3.0.0
+paths:
+  /slots:
+    get:
+      operationId: listSlots
+      summary: Список слотов доставки
+      tags:
+        - slots
+      responses:
+        '200':
+          description: Слоты.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SlotDto'
+  /slots/{id}:
+    get:
+      operationId: getSlot
+      summary: Слот по идентификатору
+      description: Возвращает выбранный слот доставки; после возврата из корзины слот уже сброшен.
+      tags:
+        - slots
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Идентификатор слота.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Слот.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SlotDto'
+        '404':
+          description: Слота нет.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDto'
+  /slots/{id}/reserve:
+    post:
+      operationId: reserveSlot
+      summary: Зарезервировать слот
+      tags:
+        - slots
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Слот зарезервирован, событие опубликовано.
+info:
+  title: Fixture API
+  version: 0.0.1
+  description: Учебный контракт для тестов.
+tags:
+  - name: slots
+    description: Слоты доставки.
+components:
+  schemas:
+    SlotDto:
+      type: object
+      description: Слот доставки.
+      properties:
+        id:
+          type: string
+          description: Идентификатор.
+        window:
+          type: string
+          description: Окно доставки.
+        meta:
+          $ref: '../schemas/slot-meta.json#/definitions/Meta'
+    ProblemDto:
+      type: object
+      properties:
+        title:
+          type: string

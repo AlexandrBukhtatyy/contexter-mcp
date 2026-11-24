@@ -1,0 +1,5 @@
+{
+  "definitions": {
+    "Meta": { "type": "object", "properties": { "source": { "type": "string" } } }
+  }
+}

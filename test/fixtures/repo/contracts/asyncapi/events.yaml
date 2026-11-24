@@ -1,0 +1,44 @@
+# Async-контракт учебного репозитория (рукописный, см. ADR-0001).
+# События слотов публикует api, читает worker.
+asyncapi: 3.0.0
+
+info:
+  title: Fixture events
+  version: 0.0.1
+  description: События и команды слотов доставки.
+
+channels:
+  slotReserved:
+    address: events.slot.reserved
+    description: Слот зарезервирован.
+    messages:
+      reserved:
+        $ref: '#/components/messages/SlotReserved'
+  slotCommand:
+    address: slot-command
+    description: Команда воркеру по слоту.
+  slotCancelled:
+    address: events.slot.cancelled
+    description: Отмена слота — пока никто не публикует.
+  auditLog:
+    address: audit.log
+    description: Журнал аудита — в коде пока не используется.
+
+operations:
+  onSlotReserved:
+    action: receive
+    channel:
+      $ref: '#/channels/slotReserved'
+    summary: Воркер реагирует на резервирование.
+
+components:
+  messages:
+    SlotReserved:
+      payload:
+        $ref: '#/components/schemas/SlotEvent'
+  schemas:
+    SlotEvent:
+      type: object
+      properties:
+        slotId:
+          type: string

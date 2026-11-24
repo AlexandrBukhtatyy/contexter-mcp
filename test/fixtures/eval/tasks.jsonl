@@ -1,0 +1,3 @@
+{"id":"fx-1","task":"Выбранный слот сбрасывается при возврате из корзины\n\nПосле возврата из корзины на экран доставки выбранный слот пропадает.","files":["apps/api/src/slots/slot.service.ts"],"docs":["docs/guides/slots.md","docs/adr/0001-slot-on-server.md"]}
+{"id":"eval-endpoint","task":"GET /slots/{id} отвечает 404 для существующего слота","files":["apps/api/src/slots/slots.controller.ts","apps/api/src/slots/slot.service.ts"],"docs":["contracts/openapi/api.yaml"]}
+{"id":"eval-gsm","task":"Обработчик команд не разбирает кадр GSM: ParseGSMFrame возвращает ошибку «пустой кадр»","files":["packages/gsm/frame.go","apps/worker/internal/dispatch/handler.go"],"docs":["docs/guides/slots.md"]}

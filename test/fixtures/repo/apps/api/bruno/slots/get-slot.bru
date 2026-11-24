@@ -1,0 +1,21 @@
+meta {
+  name: get-slot
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/slots/{{slotId}}?expand=window
+  body: none
+  auth: none
+}
+
+docs {
+  Сценарий чтения слота: сервер хранит выбор (ADR-0001).
+}
+
+tests {
+  test("200 и окно доставки в ответе", function () {
+    expect(res.status).to.equal(200);
+  });
+}
